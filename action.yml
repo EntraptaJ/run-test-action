@@ -1,0 +1,6 @@
+name: 'NPM Test Runner'
+description: ''
+author: 'Kristian Jones'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
