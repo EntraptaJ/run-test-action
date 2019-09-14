@@ -35,9 +35,8 @@ async function runTests(): Promise<void> {
       await run(`npm install`, { cwd: parse(filename).dir });
       const { onclose, process } = spawn('npm', ['test'], { cwd: parse(filename).dir, event: 'close' })
       //  failTest({ pr: pr.number, result: await process.ou.toString() })
-      onclose.catch(async () => {
-       const test1 = await onclose
-       console.log(`Test1: `, test1)
+      onclose.catch(async (test) => {
+       console.log(`Test1: `, test)
       })
       
     }
