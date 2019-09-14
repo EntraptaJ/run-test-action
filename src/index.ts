@@ -33,7 +33,7 @@ async function runTests(): Promise<void> {
     for (const filename of filenames) {
       console.log(filename, parse(filename).dir)
       await run(`npm install`, { cwd: parse(filename).dir });
-      const { code, bl } = await run(`npm test`);
+      const { code, bl } = await run(`npm test`, { cwd: parse(filename).dir });
       console.log(bl.toString());
       if (code !== 0) failTest({ pr: pr.number, result: bl.toString() })
     }

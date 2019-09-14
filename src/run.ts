@@ -8,7 +8,7 @@ export default function run(
     cwd?: string;
   } = {},
 ): Promise<{ code: number; bl: BufferList }> {
-  const args = command.split(/\s/);
+  const args = command.split(' ');
   const bin = args.shift() as string;
 
   const child = spawn(bin, args, {
