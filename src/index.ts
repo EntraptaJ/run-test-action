@@ -26,7 +26,7 @@ async function failTest({ pr, result }: FailTestArgs): Promise<void> {
 
 async function runTests(): Promise<void> {
   const { pull_request: pr } = github.context.payload;
-  // if (!pr) throw new Error('Event payload missing `pull_request`');
+  if (!pr) throw new Error('Event payload missing `pull_request`');
 
   try {
     const filenames = sync(`${process.env.GITHUB_WORKSPACE}/**/package.json`);
