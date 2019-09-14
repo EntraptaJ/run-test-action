@@ -2,7 +2,8 @@
 import { getInput, setFailed } from '@actions/core';
 import { sync } from 'glob';
 import { parse } from 'path';
-import run from './run';
+import spawn from 'advanced-spawn-async'
+import run from  './run'
 import * as github from '@actions/github';
 
 const token = getInput('github-token');
@@ -31,11 +32,10 @@ async function runTests(): Promise<void> {
   try {
     const filenames = sync(`${process.env.GITHUB_WORKSPACE}/**/package.json`);
     for (const filename of filenames) {
-      console.log(filename, parse(filename).dir)
       await run(`npm install`, { cwd: parse(filename).dir });
-      const { code, bl } = await run(`npm test`, { cwd: parse(filename).dir });
-      console.log(bl.toString());
-      if (code !== 0) failTest({ pr: pr.number, result: bl.toString() })
+      const test = await spawn('npm', ['test'], { cwd: parse(filename).dir }).onclose
+      console.log(test)
+      if (test.status !== 0) failTest({ pr: pr.number, result: test.output.toString() })
     }
   } catch (error) {
     setFailed(error.message);
