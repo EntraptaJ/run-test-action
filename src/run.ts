@@ -8,7 +8,12 @@ export default function run(
     cwd?: string;
   } = {},
 ): Promise<{ code: number; bl: BufferList }> {
-  const child = spawn(command, { cwd: options.cwd });
+  const args = command.split(/\s/);
+  const bin = args.shift() as string;
+
+  const child = spawn(bin, args, {
+    cwd: options.cwd,
+  });
   // @ts-ignore
   const stdout = child.stdout ? new BufferList() : ('' as BufferList);
   // @ts-ignore

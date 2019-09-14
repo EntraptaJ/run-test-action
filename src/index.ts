@@ -31,6 +31,7 @@ async function runTests(): Promise<void> {
   try {
     const filenames = sync(`${process.env.GITHUB_WORKSPACE}/**/package.json`);
     for (const filename of filenames) {
+      console.log(filename, parse(filename).dir)
       await run(`npm install`, { cwd: parse(filename).dir });
       const { code, bl } = await run(`npm test`);
       console.log(bl.toString());
