@@ -2,7 +2,7 @@
 import { spawn } from 'child_process';
 import BufferList from 'bl';
 
-export default async function run(
+export default function run(
   command: string,
   options: {
     cwd?: string;
@@ -13,7 +13,6 @@ export default async function run(
 
   const child = spawn(bin, args, {
     cwd: options.cwd || process.cwd(),
-    shell: true,
   });
   // @ts-ignore
   const stdout = child.stdout ? new BufferList() : ('' as BufferList);
