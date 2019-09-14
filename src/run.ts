@@ -27,12 +27,6 @@ export default async function run(
   return new Promise((resolve, reject) => {
     child.on('error', reject);
 
-    child.on('exit', (code) => {
-      if (code === 0) resolve({ code, bl: stdout });
-      else {
-        const err = new Error(`child exited with code ${code}`);
-        reject(err);
-      }
-    });
+    child.on('exit', (code) => resolve({ code, bl: stdout }));
   });
 }
