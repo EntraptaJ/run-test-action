@@ -33,8 +33,13 @@ async function runTests(): Promise<void> {
     const filenames = sync(`${process.env.GITHUB_WORKSPACE}/**/package.json`);
     for (const filename of filenames) {
       await run(`npm install`, { cwd: parse(filename).dir });
-      const test = await spawn('npm', ['test'], { cwd: parse(filename).dir, event: 'close' }).onclose
-      failTest({ pr: pr.number, result: test.output.toString() })
+      const { onclose, process } = spawn('npm', ['test'], { cwd: parse(filename).dir, event: 'close' })
+      //  failTest({ pr: pr.number, result: await process.ou.toString() })
+      onclose.catch(async () => {
+       const test1 = await onclose
+       console.log(`Test1: `, test1)
+      })
+      
     }
   } catch (error) {
     setFailed(error.message);
