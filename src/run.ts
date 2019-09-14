@@ -8,7 +8,7 @@ export default function run(
     cwd?: string;
   } = {},
 ): Promise<{ code: number; bl: BufferList }> {
-  const child = spawn(command);
+  const child = spawn(command, { cwd: options.cwd });
   // @ts-ignore
   const stdout = child.stdout ? new BufferList() : ('' as BufferList);
   // @ts-ignore
