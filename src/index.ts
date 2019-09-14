@@ -26,17 +26,17 @@ async function failTest({ pr, result }: FailTestArgs): Promise<void> {
 
 async function runTests(): Promise<void> {
   const { pull_request: pr } = github.context.payload;
-  if (!pr) throw new Error('Event payload missing `pull_request`');
+  // if (!pr) throw new Error('Event payload missing `pull_request`');
 
   try {
     const filenames = sync(`${process.env.GITHUB_WORKSPACE}/**/package.json`);
 
     for (const filename of filenames) {
       await run(`npm install`, { cwd: parse(filename).dir });
-      const { code, result } = await run(`npm test`);
+      const { code, bl } = await run(`npm test`);
 
-      console.log({ code, result })
-      if (code !== 0) failTest({ pr: pr.number, result })
+      if (code !== 0) failTest({ pr: pr.number, result: bl.toString() })
+      console.log(bl.toString())
     }
   } catch (error) {
     setFailed(error.message);
