@@ -17,7 +17,7 @@
     "typescript": "^3.6.3"
   },
   "dependencies": {
-    "@actions/core": "^1.1.0",
+    "@actions/core": "^1.2.6",
     "@actions/github": "^1.1.0",
     "advanced-spawn-async": "^0.1.0",
     "await-spawn": "^3.0.0",
